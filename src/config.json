@@ -1,0 +1,23 @@
+{
+  "defaultMapId": "Finance",
+  "taxonomies": {
+    "finance":  "taxonomy-finance.json"
+  },
+  "maps": {
+    "Finance": {
+      "title": "Finance",
+      "shortName": "Finance",
+      "center": [
+        -98.7,
+        39.1
+      ],
+      "flyTo": [
+        -98.7,
+        39.1
+      ],
+      "flyToZoom": 4,
+      "taxonomy": "finance",
+      "displayHoneywellLogo": false
+    }
+  }
+}
