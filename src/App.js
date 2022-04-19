@@ -8,6 +8,7 @@ import LogoOverlay from './LogoOverlay';
 import IconButton from '@material-ui/core/Button';
 import { Home } from '@material-ui/icons';  
 import Omnibox from './Omnibox';
+import SettingsPane from './SettingsPane';
 import { getAllCategories } from './common';
 import CONFIG from './config.json';
 import { fetchMapData } from './data-loader';
@@ -200,10 +201,25 @@ export default function App() {
   const [selectedCategories, setSelectedCategories] = useState(new Set([]));
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
+  function handleToggleCategory(e) {
+    // called when categories are individually changed
+    var s = new Set(selectedCategories);
+    if (s.has(e.target.name)) {
+      s.delete(e.target.name);
+    } else {
+      s.add(e.target.name);
+    }
+    setSelectedCategories(s);
+  }
+
   function handleSelectAllCategories(txnomy) {
     // takes argument instead of using taxonomy directly because taxonomy
     // state update can lag behind
     setSelectedCategories(getAllCategories(txnomy));
+  }
+
+  function handleDeselectAllCategories() {
+    setSelectedCategories(new Set());
   }
 
   function handleSelectCompany(e) {
@@ -226,6 +242,15 @@ export default function App() {
       mapData.then(setUpMap);
       populateMapData(thisMap, mapId, mapData);
       handleSelectAllCategories(taxonomy);
+    }
+  }
+
+  function handleShift() {
+    // called when you open the mobile drawer
+    if (!mobileDrawerOpen) {
+      return classes.mainControlOverlay;
+    } else {
+      return classes.mainControlOverlayShifted;
     }
   }
 
@@ -293,6 +318,16 @@ export default function App() {
   return (
     <ThemeProvider theme={THEME}>
       <div className={classes.root}>
+        <SettingsPane
+        selectedMapId={selectedMapId}
+        mobileDrawerOpen={mobileDrawerOpen}
+        selectedCategories={selectedCategories}
+        onToggleOpen={setMobileDrawerOpen}
+        onSelectMap={handleSelectMap}
+        taxonomy={taxonomy}
+        onSelectAllCategories={() => handleSelectAllCategories(taxonomy)}
+        onDeselectAllCategories={handleDeselectAllCategories}
+        onToggleCategory={handleToggleCategory} />
         <main className={classes.mainContent}>
           <div id="map-container" className={classes.mapContainer} />
           <LogoOverlay selectedMapId={selectedMapId} />
