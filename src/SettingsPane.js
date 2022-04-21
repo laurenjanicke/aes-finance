@@ -125,13 +125,8 @@ export default function SettingsPane(props) {
         </Hidden>
       </div>
       <div className={classes.settingsPaneContent}>
-        <div className={classes.settingsPaneSubheader}>
-          <Typography variant="h3">Select the point color</Typography>
-        </div>
-        <LocationSelector
-          onSelectMap={props.onSelectMap}
-          selectedMapId={props.selectedMapId} />
-        <Divider style={{margin: 4}} />
+
+
         <div className={classes.settingsPaneSubheader}>
           <Typography variant="h3">Filter by category</Typography>
         </div>
